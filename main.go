@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"github.com/shimanekb/project2-A/controller"
+	"github.com/shimanekb/project2-B/controller"
 	log "github.com/sirupsen/logrus"
 	"io/ioutil"
 	"os"

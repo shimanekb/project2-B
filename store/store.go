@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	DATA_FLUSH_THRESHOLD int    = 100
+	DATA_FLUSH_THRESHOLD int    = 125000
 	GET_COMMAND          string = "get"
 	PUT_COMMAND          string = "put"
 	DEL_COMMAND          string = "del"
