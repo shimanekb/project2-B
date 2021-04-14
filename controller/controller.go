@@ -28,7 +28,7 @@ type Command struct {
 	Value  string
 }
 
-func ReadCsvCommands(filePath string, outputPath string) {
+func ReadCsvCommands(filePath string, outputPath string, storeFile string) {
 	csv_file, err := os.Open(filePath)
 
 	log.Infof("Opening csv file %s", filePath)
@@ -51,8 +51,8 @@ func ReadCsvCommands(filePath string, outputPath string) {
 		log.Fatalf("Cannot create directory for storage at %s", STORAGE_DIR)
 	}
 
-	logPath := filepath.Join(path, STORAGE_FILE)
-	localStore, storeErr := store.NewSsStore(logPath)
+	storePath := filepath.Join(path, storeFile)
+	localStore, storeErr := store.NewSsStore(storePath)
 	if storeErr != nil {
 		log.Fatal("Could not create store.", storeErr)
 	}

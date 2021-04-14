@@ -10,6 +10,7 @@ import (
 
 func main() {
 	var logFlag *bool = flag.Bool("logs", false, "Enable logs")
+	var storeFlag *string = flag.String("store_file", "data_records.txt", "Set name of store file.")
 	flag.Parse()
 
 	if *logFlag {
@@ -20,6 +21,8 @@ func main() {
 		log.SetOutput(ioutil.Discard)
 	}
 
+	var storeFile string = *storeFlag
+
 	args := flag.Args()
 	if flag.NArg() < 2 {
 		log.Fatalln("Missing file path argument for input.")
@@ -27,5 +30,5 @@ func main() {
 
 	filePath := args[0]
 	outputPath := args[1]
-	controller.ReadCsvCommands(filePath, outputPath)
+	controller.ReadCsvCommands(filePath, outputPath, storeFile)
 }
