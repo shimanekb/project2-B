@@ -442,6 +442,7 @@ func writeBlock(filepath string, block Block) (offset int64, err error) {
 	}
 	defer f.Close()
 
+	writeNumber := 0
 	firstRecord := true
 	for _, k := range block.Keys() {
 		i, _ := block.items.Get(k)
@@ -458,6 +459,7 @@ func writeBlock(filepath string, block Block) (offset int64, err error) {
 		if werr != nil {
 			return -1, werr
 		}
+		writeNumber += 1
 	}
 
 	_, werr := f.WriteString("\n")
@@ -465,6 +467,7 @@ func writeBlock(filepath string, block Block) (offset int64, err error) {
 		return -1, werr
 	}
 
+	log.Infof("Number of writes for block is %d", writeNumber)
 	return offset, nil
 }
 
@@ -538,15 +541,18 @@ func collectItemsToWrite(s SsBlockStorage, commands []Command) []KeyValueItem {
 	log.Info("Collected key value items from blocks.")
 
 	log.Info("Pruning commands due to delete tombstones")
+	writeCommandsAmount := 0
 	for _, cmd := range commands {
 		if cmd.Type == DEL_COMMAND {
 			log.Infof("Delete command found for key %s, removing from items to write.", cmd.Item.keyHash)
 			delete(itemMap, cmd.Item.KeyHash())
 		} else {
+			writeCommandsAmount += 1
 			itemMap[cmd.Item.KeyHash()] = cmd.Item
 		}
 	}
 
+	log.Infof("Number of new write commands is %d", writeCommandsAmount)
 	log.Info("Pruned commands due to delete tombstones")
 
 	for _, value := range itemMap {
