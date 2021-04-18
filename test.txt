@@ -2,3 +2,4 @@
 real	0m0.000s
 user	0m0.000s
 sys	0m0.000s
+Total Writes: 90, Entries: 90, Wa: 1.00
