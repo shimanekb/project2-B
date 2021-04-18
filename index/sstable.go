@@ -442,7 +442,7 @@ func writeBlock(filepath string, block Block) (offset int64, err error) {
 	}
 	defer f.Close()
 
-	writeNumber := 0
+	//writeNumber := block.items.Len()
 	firstRecord := true
 	for _, k := range block.Keys() {
 		i, _ := block.items.Get(k)
@@ -459,7 +459,6 @@ func writeBlock(filepath string, block Block) (offset int64, err error) {
 		if werr != nil {
 			return -1, werr
 		}
-		writeNumber += 1
 	}
 
 	_, werr := f.WriteString("\n")
@@ -467,7 +466,7 @@ func writeBlock(filepath string, block Block) (offset int64, err error) {
 		return -1, werr
 	}
 
-	log.Infof("Number of writes for block is %d", writeNumber)
+	//log.Infof("Number of writes for block is %d", writeNumber)
 	return offset, nil
 }
 
@@ -524,7 +523,7 @@ func collectItemsToWrite(s SsBlockStorage, commands []Command) []KeyValueItem {
 		blocks = append(blocks, *block)
 	}
 
-	log.Info("read blocks for collection")
+	log.Infof("Read %d blocks for collection", len(blocks))
 
 	log.Info("Collecting key value items from blocks.")
 	for _, block := range blocks {
@@ -574,7 +573,8 @@ func (s *SsBlockStorage) WriteKvItems(commands []Command) (BlockStorage, error) 
 	log.Info("Removing old sstable file if exists.")
 	tmpFilePath := "./temp_data.txt"
 
-	index := make([]string, 0, 5000)
+	log.Infof("Number of total writes is %d", len(items))
+	index := make([]string, 0, 100000)
 	for startingIndex < len(items) {
 		block, nextIndex := createBlock(items, startingIndex)
 		startingIndex = nextIndex
