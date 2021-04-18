@@ -35,21 +35,21 @@ echo "Created SS Tables"
 echo "Running experiment"
 { time ./project2-B -logs -store_file store_A ./docs/input_mill.txt output_a.txt ; } 2> metrics_a.txt
 ./calculate_wa.sh >> metrics_a.txt 
-rm logs.txt
+mv logs.txt logs_a.txt
 
 { time ./project2-B -logs -store_file store_B ./docs/input_mill.txt output_b.txt ; } 2> metrics_b.txt
 ./calculate_wa.sh >> metrics_b.txt 
-rm logs.txt
+mv logs.txt logs_b.txt
 
 
 { time ./project2-B -logs -store_file store_C ./docs/input_mill.txt output_c.txt ; } 2> metrics_c.txt
 ./calculate_wa.sh >> metrics_c.txt 
-rm logs.txt
+mv logs.txt logs_c.txt
 
 
 { time ./project2-B -logs -store_file store_D ./docs/input_mill.txt output_d.txt ; } 2> metrics_d.txt
-./calculate_wa.sh >> metrics_c.txt 
-rm logs.txt
+./calculate_wa.sh >> metrics_d.txt 
+mv logs.txt logs_d.txt
 
 
 echo "Finished running experiment"
