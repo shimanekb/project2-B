@@ -20,11 +20,11 @@ else
   echo "Created SS Table B"
 
   echo "Creating SS Table C"
-  ./project2-B -store_file store_C ./docs/input_a.txt output.txt
+  ./project2-B -store_file store_C ./docs/input_c.txt output.txt
   echo "Created SS Table C"
 
   echo "Creating SS Table D"
-  ./project2-B -store_file store_D ./docs/input_a.txt output.txt
+  ./project2-B -store_file store_D ./docs/input_d.txt output.txt
   echo "Created SS Table D"
 
   cp -r storage storage_backup
